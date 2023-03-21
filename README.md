@@ -17,6 +17,7 @@ A Github Action that checks another workflow's latest status
 ### Outputs
 
 * `status` & `conclusion` - Result of Github API. For a list of the possible `status` and `conclusion` options, see [Create a check run](https://docs.github.com/rest/reference/checks#create-a-check-run)
+* Please note that `conclusion` may be null when the workflow is currently running
 
 ## Example Workflow
 
@@ -37,7 +38,7 @@ jobs:
         
       - name: Check CI
       	id: check-ci
-      	uses: ronymeyer/workflow-status@v0.0.3
+      	uses: ronymeyer/workflow-status@v0.3.6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           workflow: ci.yml
