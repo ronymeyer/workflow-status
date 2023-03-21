@@ -40,68 +40,54 @@ var core = require("@actions/core");
 var github = require("@actions/github");
 var utils_1 = require("./utils");
 function run() {
-    var _a, _b, _c, _d;
     return __awaiter(this, void 0, Promise, function () {
-        var token, workflow, branch, event, wait, fullRepo, _e, owner, repo, octokit, status, conclusion, workflow_runs, latest, err_1;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
-                case 0:
-                    _f.trys.push([0, 6, , 7]);
-                    token = core.getInput('token', { required: true });
-                    workflow = core.getInput('workflow', { required: true });
-                    branch = core.getInput('branch');
-                    event = utils_1.getOptionalInput('event');
-                    wait = core.getBooleanInput('wait');
-                    fullRepo = utils_1.getOptionalInput('repo');
-                    if (fullRepo === undefined) {
-                        fullRepo = utils_1.getRepository();
-                    }
-                    _e = utils_1.getOwnerAndRepo(fullRepo), owner = _e[0], repo = _e[1];
-                    core.info("Checking result of " + workflow + " from " + fullRepo + ":" + branch);
-                    octokit = github.getOctokit(token);
-                    status = null;
-                    conclusion = null;
-                    _f.label = 1;
-                case 1: return [4 /*yield*/, octokit.rest.actions.listWorkflowRuns({
-                        owner: owner,
-                        repo: repo,
-                        workflow_id: workflow,
-                        branch: branch,
-                        event: event,
-                        per_page: 1
-                    })];
-                case 2:
-                    workflow_runs = (_f.sent()).data.workflow_runs;
-                    core.info("workflow_runs: " + workflow_runs);
-                    latest = utils_1.getFirst(workflow_runs);
-                    core.info("latest: " + latest);
-                    status = (_b = (_a = latest) === null || _a === void 0 ? void 0 : _a.status, (_b !== null && _b !== void 0 ? _b : null));
-                    conclusion = (_d = (_c = latest) === null || _c === void 0 ? void 0 : _c.conclusion, (_d !== null && _d !== void 0 ? _d : null));
-                    if (!(wait && status !== 'completed')) return [3 /*break*/, 4];
-                    return [4 /*yield*/, utils_1.waitTime(5 * 1000)];
-                case 3:
-                    _f.sent();
-                    return [3 /*break*/, 4];
-                case 4:
-                    if (false) return [3 /*break*/, 1];
-                    _f.label = 5;
-                case 5:
-                    if (status !== null && conclusion !== null) {
-                        core.info("status: " + status);
-                        core.info("conclusion: " + conclusion);
-                        core.setOutput('status', status);
-                        core.setOutput('conclusion', conclusion);
-                    }
-                    else {
-                        utils_1.logWarning('Workflow run is missing');
-                    }
-                    return [3 /*break*/, 7];
-                case 6:
-                    err_1 = _f.sent();
-                    core.setFailed("Failed with error: " + err_1.message);
-                    return [3 /*break*/, 7];
-                case 7: return [2 /*return*/];
+        var token, workflow, branch, event, wait, fullRepo, _a, owner, repo, octokit, status_1, conclusion_1;
+        return __generator(this, function (_b) {
+            try {
+                token = core.getInput('token', { required: true });
+                workflow = core.getInput('workflow', { required: true });
+                branch = core.getInput('branch');
+                event = utils_1.getOptionalInput('event');
+                wait = core.getBooleanInput('wait');
+                fullRepo = utils_1.getOptionalInput('repo');
+                if (fullRepo === undefined) {
+                    fullRepo = utils_1.getRepository();
+                }
+                _a = utils_1.getOwnerAndRepo(fullRepo), owner = _a[0], repo = _a[1];
+                core.info("Checking result of " + workflow + " from " + fullRepo + ":" + branch);
+                octokit = github.getOctokit(token);
+                status_1 = null;
+                conclusion_1 = null;
+                octokit.rest.actions
+                    .listWorkflowRuns({
+                    owner: owner,
+                    repo: repo,
+                    workflow_id: workflow,
+                    branch: branch,
+                    event: event,
+                    per_page: 1
+                })
+                    .then(function (_a) {
+                    var data = _a.data;
+                    var _b, _c, _d, _e;
+                    // handle data
+                    status_1 = (_c = (_b = data) === null || _b === void 0 ? void 0 : _b.status, (_c !== null && _c !== void 0 ? _c : null));
+                    conclusion_1 = (_e = (_d = data) === null || _d === void 0 ? void 0 : _d.conclusion, (_e !== null && _e !== void 0 ? _e : null));
+                });
+                if (status_1 !== null && conclusion_1 !== null) {
+                    core.info("status: " + status_1);
+                    core.info("conclusion: " + conclusion_1);
+                    core.setOutput('status', status_1);
+                    core.setOutput('conclusion', conclusion_1);
+                }
+                else {
+                    utils_1.logWarning('Workflow run is missing');
+                }
             }
+            catch (err) {
+                core.setFailed("Failed with error: " + err.message);
+            }
+            return [2 /*return*/];
         });
     });
 }

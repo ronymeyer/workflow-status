@@ -30,32 +30,21 @@ async function run(): Promise<void> {
     let status: string | null = null;
     let conclusion: string | null = null;
 
-    do {
-      const {
-        data: {workflow_runs}
-      } = await octokit.rest.actions.listWorkflowRuns({
+    octokit.rest.actions
+      .listWorkflowRuns({
         owner,
         repo,
         workflow_id: workflow,
         branch,
         event,
         per_page: 1
-      });
+      })
+      .then(({ data }) => {
+        // handle data
+        status = data?.status ?? null;
+        conclusion = data?.conclusion ?? null;
+    });
 
-      core.info(`workflow_runs: ${workflow_runs}`);
-
-      const latest = getFirst(workflow_runs);
-
-      core.info(`latest: ${latest}`);
-
-      status = latest?.status ?? null;
-      conclusion = latest?.conclusion ?? null;
-
-      if (wait && status !== 'completed') {
-        await waitTime(5 * 1000);
-        continue;
-      }
-    } while (false);
 
     if (status !== null && conclusion !== null) {
       core.info(`status: ${status}`);
