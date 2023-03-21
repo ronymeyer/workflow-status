@@ -9,6 +9,7 @@ import {
   waitTime
 } from './utils';
 
+
 async function run(): Promise<void> {
   try {
     const token = core.getInput('token', {required: true});
@@ -30,7 +31,7 @@ async function run(): Promise<void> {
     let status: string | null = null;
     let conclusion: string | null = null;
 
-    octokit.rest.actions
+    const result = await octokit.rest.actions
       .listWorkflowRuns({
         owner,
         repo,
@@ -39,11 +40,14 @@ async function run(): Promise<void> {
         event,
         per_page: 1
       })
-      .then(({ data }) => {
-        // handle data
-        status = data?.status ?? null;
-        conclusion = data?.conclusion ?? null;
-    });
+;
+
+    for (const latest of result.data.workflow_runs) {
+      status = latest.status ?? null;
+      conclusion = latest.conclusion ?? null;
+    }
+
+
 
 
     if (status !== null && conclusion !== null) {
@@ -55,8 +59,8 @@ async function run(): Promise<void> {
     } else {
       logWarning('Workflow run is missing');
     }
-  } catch (err) {
-    core.setFailed(`Failed with error: ${err.message}`);
+  } catch (ex) {
+    core.setFailed(`Failed with error: ${ex}`);
   }
 }
 

@@ -40,54 +40,59 @@ var core = require("@actions/core");
 var github = require("@actions/github");
 var utils_1 = require("./utils");
 function run() {
+    var _a, _b;
     return __awaiter(this, void 0, Promise, function () {
-        var token, workflow, branch, event, wait, fullRepo, _a, owner, repo, octokit, status_1, conclusion_1;
-        return __generator(this, function (_b) {
-            try {
-                token = core.getInput('token', { required: true });
-                workflow = core.getInput('workflow', { required: true });
-                branch = core.getInput('branch');
-                event = utils_1.getOptionalInput('event');
-                wait = core.getBooleanInput('wait');
-                fullRepo = utils_1.getOptionalInput('repo');
-                if (fullRepo === undefined) {
-                    fullRepo = utils_1.getRepository();
-                }
-                _a = utils_1.getOwnerAndRepo(fullRepo), owner = _a[0], repo = _a[1];
-                core.info("Checking result of " + workflow + " from " + fullRepo + ":" + branch);
-                octokit = github.getOctokit(token);
-                status_1 = null;
-                conclusion_1 = null;
-                octokit.rest.actions
-                    .listWorkflowRuns({
-                    owner: owner,
-                    repo: repo,
-                    workflow_id: workflow,
-                    branch: branch,
-                    event: event,
-                    per_page: 1
-                })
-                    .then(function (_a) {
-                    var data = _a.data;
-                    var _b, _c, _d, _e;
-                    // handle data
-                    status_1 = (_c = (_b = data) === null || _b === void 0 ? void 0 : _b.status, (_c !== null && _c !== void 0 ? _c : null));
-                    conclusion_1 = (_e = (_d = data) === null || _d === void 0 ? void 0 : _d.conclusion, (_e !== null && _e !== void 0 ? _e : null));
-                });
-                if (status_1 !== null && conclusion_1 !== null) {
-                    core.info("status: " + status_1);
-                    core.info("conclusion: " + conclusion_1);
-                    core.setOutput('status', status_1);
-                    core.setOutput('conclusion', conclusion_1);
-                }
-                else {
-                    utils_1.logWarning('Workflow run is missing');
-                }
+        var token, workflow, branch, event, wait, fullRepo, _c, owner, repo, octokit, status, conclusion, result, _i, _d, latest, ex_1;
+        return __generator(this, function (_e) {
+            switch (_e.label) {
+                case 0:
+                    _e.trys.push([0, 2, , 3]);
+                    token = core.getInput('token', { required: true });
+                    workflow = core.getInput('workflow', { required: true });
+                    branch = core.getInput('branch');
+                    event = utils_1.getOptionalInput('event');
+                    wait = core.getBooleanInput('wait');
+                    fullRepo = utils_1.getOptionalInput('repo');
+                    if (fullRepo === undefined) {
+                        fullRepo = utils_1.getRepository();
+                    }
+                    _c = utils_1.getOwnerAndRepo(fullRepo), owner = _c[0], repo = _c[1];
+                    core.info("Checking result of " + workflow + " from " + fullRepo + ":" + branch);
+                    octokit = github.getOctokit(token);
+                    status = null;
+                    conclusion = null;
+                    return [4 /*yield*/, octokit.rest.actions
+                            .listWorkflowRuns({
+                            owner: owner,
+                            repo: repo,
+                            workflow_id: workflow,
+                            branch: branch,
+                            event: event,
+                            per_page: 1
+                        })];
+                case 1:
+                    result = _e.sent();
+                    for (_i = 0, _d = result.data.workflow_runs; _i < _d.length; _i++) {
+                        latest = _d[_i];
+                        status = (_a = latest.status, (_a !== null && _a !== void 0 ? _a : null));
+                        conclusion = (_b = latest.conclusion, (_b !== null && _b !== void 0 ? _b : null));
+                    }
+                    if (status !== null && conclusion !== null) {
+                        core.info("status: " + status);
+                        core.info("conclusion: " + conclusion);
+                        core.setOutput('status', status);
+                        core.setOutput('conclusion', conclusion);
+                    }
+                    else {
+                        utils_1.logWarning('Workflow run is missing');
+                    }
+                    return [3 /*break*/, 3];
+                case 2:
+                    ex_1 = _e.sent();
+                    core.setFailed("Failed with error: " + ex_1);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
-            catch (err) {
-                core.setFailed("Failed with error: " + err.message);
-            }
-            return [2 /*return*/];
         });
     });
 }
