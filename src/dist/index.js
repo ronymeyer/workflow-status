@@ -40,13 +40,12 @@ var core = require("@actions/core");
 var github = require("@actions/github");
 var utils_1 = require("./utils");
 function run() {
-    var _a, _b;
     return __awaiter(this, void 0, Promise, function () {
-        var token, workflow, branch, event, wait, fullRepo, _c, owner, repo, octokit, status, conclusion, result, _i, _d, latest, ex_1;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
+        var token, workflow, branch, event, wait, fullRepo, _a, owner, repo, octokit, status, conclusion, result, _i, _b, latest, ex_1;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _e.trys.push([0, 2, , 3]);
+                    _c.trys.push([0, 2, , 3]);
                     token = core.getInput('token', { required: true });
                     workflow = core.getInput('workflow', { required: true });
                     branch = core.getInput('branch');
@@ -56,7 +55,7 @@ function run() {
                     if (fullRepo === undefined) {
                         fullRepo = utils_1.getRepository();
                     }
-                    _c = utils_1.getOwnerAndRepo(fullRepo), owner = _c[0], repo = _c[1];
+                    _a = utils_1.getOwnerAndRepo(fullRepo), owner = _a[0], repo = _a[1];
                     core.info("Checking result of " + workflow + " from " + fullRepo + ":" + branch);
                     octokit = github.getOctokit(token);
                     status = null;
@@ -71,11 +70,14 @@ function run() {
                             per_page: 1
                         })];
                 case 1:
-                    result = _e.sent();
-                    for (_i = 0, _d = result.data.workflow_runs; _i < _d.length; _i++) {
-                        latest = _d[_i];
-                        status = (_a = latest.status, (_a !== null && _a !== void 0 ? _a : null));
-                        conclusion = (_b = latest.conclusion, (_b !== null && _b !== void 0 ? _b : null));
+                    result = _c.sent();
+                    core.info("Received status code " + result.status + ", number or results: " + result.data.total_count);
+                    for (_i = 0, _b = result.data.workflow_runs; _i < _b.length; _i++) {
+                        latest = _b[_i];
+                        core.info("status loop: " + status);
+                        core.info("conclusion loop: " + conclusion);
+                        status = latest.status;
+                        conclusion = latest.conclusion;
                     }
                     if (status !== null && conclusion !== null) {
                         core.info("status: " + status);
@@ -88,7 +90,7 @@ function run() {
                     }
                     return [3 /*break*/, 3];
                 case 2:
-                    ex_1 = _e.sent();
+                    ex_1 = _c.sent();
                     core.setFailed("Failed with error: " + ex_1);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];

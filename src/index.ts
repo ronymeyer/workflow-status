@@ -39,12 +39,15 @@ async function run(): Promise<void> {
         branch,
         event,
         per_page: 1
-      })
-;
+    });
+
+    core.info(`Received status code ${result.status}, number or results: ${result.data.total_count}`);
 
     for (const latest of result.data.workflow_runs) {
-      status = latest.status ?? null;
-      conclusion = latest.conclusion ?? null;
+      core.info(`status loop: ${status}`);
+      core.info(`conclusion loop: ${conclusion}`);
+      status = latest.status;
+      conclusion = latest.conclusion;
     }
 
 
