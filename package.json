@@ -1,6 +1,6 @@
 {
   "name": "workflow-status",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "A Github Action that validates another workflow's latest status",
   "main": "dist/index.js",
   "scripts": {
@@ -10,18 +10,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LASER-Yi/validate-workflow-status.git"
+    "url": "git+https://github.com/ronymeyer/workflow-status.git"
   },
   "keywords": [
     "actions",
     "node"
   ],
-  "author": "LASER-Yi",
+  "author": "Rony Meyer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/LASER-Yi/validate-workflow-status/issues"
+    "url": "https://github.com/ronymeyer/workflow-status/issues"
   },
-  "homepage": "https://github.com/LASER-Yi/validate-workflow-status#readme",
+  "homepage": "https://github.com/ronymeyer/workflow-status/#readme",
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.0"

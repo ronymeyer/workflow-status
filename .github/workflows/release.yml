@@ -31,7 +31,7 @@ jobs:
 
       - name: Check CI
         id: check-ci
-        uses: LASER-Yi/workflow-status@main
+        uses: ronymeyer/workflow-status@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           workflow: test.yml

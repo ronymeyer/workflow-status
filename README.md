@@ -1,6 +1,6 @@
 # workflow-status
 
-[![build-test](https://github.com/LASER-Yi/workflow-status/actions/workflows/test.yml/badge.svg)](https://github.com/LASER-Yi/workflow-status/actions/workflows/test.yml)
+[![build-test](https://github.com/ronymeyer/workflow-status/actions/workflows/test.yml/badge.svg)](https://github.com/ronymeyer/workflow-status/actions/workflows/test.yml)
 
 A Github Action that checks another workflow's latest status
 
@@ -37,7 +37,7 @@ jobs:
         
       - name: Check CI
       	id: check-ci
-      	uses: LASER-Yi/workflow-status@v0.0.2
+      	uses: ronymeyer/workflow-status@v0.0.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           workflow: ci.yml
@@ -51,4 +51,4 @@ jobs:
 
 ## License
 
-The scripts and documentation in this project are released under the [MIT License](https://github.com/LASER-Yi/workflow-status/blob/main/LICENSE)
+The scripts and documentation in this project are released under the [MIT License](https://github.com/ronymeyer/workflow-status/blob/main/LICENSE)
