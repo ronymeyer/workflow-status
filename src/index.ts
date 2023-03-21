@@ -43,25 +43,15 @@ async function run(): Promise<void> {
 
     core.info(`Received status code ${result.status}, number or results: ${result.data.total_count}`);
 
-    var first = result.data.workflow_runs.slice(0, 1);
-    
-    first.forEach(element => {
-      
-      core.info(`status loop1: ${element.status}`);
-      core.info(`conclusion loop1: ${element.conclusion}`);
-    });
+    const first = result.data.workflow_runs.find(e => typeof e !== 'undefined')
 
-    for (const latest of result.data.workflow_runs) {
-      status = latest.status;
-      conclusion = latest.conclusion;
-      core.info(`status loop: ${status}`);
-      core.info(`conclusion loop: ${conclusion}`);
-    }
+    status = first?.status ?? null;
+    conclusion = first?.conclusion ?? null;
+    core.info(`status loop: ${status}`);
+    core.info(`conclusion loop: ${conclusion}`);
 
-
-
-
-    if (status !== null && conclusion !== null) {
+    // conclusion is null when run is in progress
+    if (status !== null) {
       core.info(`status: ${status}`);
       core.info(`conclusion: ${conclusion}`);
 
