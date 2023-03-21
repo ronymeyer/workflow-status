@@ -72,7 +72,9 @@ function run() {
                     })];
                 case 2:
                     workflow_runs = (_f.sent()).data.workflow_runs;
+                    core.info("workflow_runs: " + workflow_runs);
                     latest = utils_1.getFirst(workflow_runs);
+                    core.info("latest: " + latest);
                     status = (_b = (_a = latest) === null || _a === void 0 ? void 0 : _a.status, (_b !== null && _b !== void 0 ? _b : null));
                     conclusion = (_d = (_c = latest) === null || _c === void 0 ? void 0 : _c.conclusion, (_d !== null && _d !== void 0 ? _d : null));
                     if (!(wait && status !== 'completed')) return [3 /*break*/, 4];

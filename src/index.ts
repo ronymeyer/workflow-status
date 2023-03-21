@@ -42,7 +42,11 @@ async function run(): Promise<void> {
         per_page: 1
       });
 
+      core.info(`workflow_runs: ${workflow_runs}`);
+
       const latest = getFirst(workflow_runs);
+
+      core.info(`latest: ${latest}`);
 
       status = latest?.status ?? null;
       conclusion = latest?.conclusion ?? null;
