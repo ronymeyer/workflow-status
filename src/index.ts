@@ -47,8 +47,6 @@ async function run(): Promise<void> {
 
     status = first?.status ?? null;
     conclusion = first?.conclusion ?? null;
-    core.info(`status loop: ${status}`);
-    core.info(`conclusion loop: ${conclusion}`);
 
     // conclusion is null when run is in progress
     if (status !== null) {
