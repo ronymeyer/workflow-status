@@ -1,6 +1,6 @@
 {
   "name": "workflow-status",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "A Github Action that validates another workflow's latest status",
   "main": "dist/index.js",
   "scripts": {
