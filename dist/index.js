@@ -9650,6 +9650,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const utils_1 = __nccwpck_require__(1314);
 function run() {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const token = core.getInput('token', { required: true });
@@ -9676,18 +9677,13 @@ function run() {
                 per_page: 1
             });
             core.info(`Received status code ${result.status}, number or results: ${result.data.total_count}`);
-            var first = result.data.workflow_runs.slice(0, 1);
-            first.forEach(element => {
-                core.info(`status loop1: ${element.status}`);
-                core.info(`conclusion loop1: ${element.conclusion}`);
-            });
-            for (const latest of result.data.workflow_runs) {
-                status = latest.status;
-                conclusion = latest.conclusion;
-                core.info(`status loop: ${status}`);
-                core.info(`conclusion loop: ${conclusion}`);
-            }
-            if (status !== null && conclusion !== null) {
+            const first = result.data.workflow_runs.find(e => typeof e !== 'undefined');
+            status = (_a = first === null || first === void 0 ? void 0 : first.status) !== null && _a !== void 0 ? _a : null;
+            conclusion = (_b = first === null || first === void 0 ? void 0 : first.conclusion) !== null && _b !== void 0 ? _b : null;
+            core.info(`status loop: ${status}`);
+            core.info(`conclusion loop: ${conclusion}`);
+            // conclusion is null when run is in progress
+            if (status !== null) {
                 core.info(`status: ${status}`);
                 core.info(`conclusion: ${conclusion}`);
                 core.setOutput('status', status);
