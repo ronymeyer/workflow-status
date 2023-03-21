@@ -9676,7 +9676,9 @@ function run() {
                     event,
                     per_page: 1
                 });
+                core.info(`workflow_runs: ${workflow_runs}`);
                 const latest = utils_1.getFirst(workflow_runs);
+                core.info(`latest: ${latest}`);
                 status = (_a = latest === null || latest === void 0 ? void 0 : latest.status) !== null && _a !== void 0 ? _a : null;
                 conclusion = (_b = latest === null || latest === void 0 ? void 0 : latest.conclusion) !== null && _b !== void 0 ? _b : null;
                 if (wait && status !== 'completed') {
