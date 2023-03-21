@@ -9650,7 +9650,6 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const utils_1 = __nccwpck_require__(1314);
 function run() {
-    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const token = core.getInput('token', { required: true });
@@ -9676,9 +9675,12 @@ function run() {
                 event,
                 per_page: 1
             });
+            core.info(`Received status code ${result.status}, number or results: ${result.data.total_count}`);
             for (const latest of result.data.workflow_runs) {
-                status = (_a = latest.status) !== null && _a !== void 0 ? _a : null;
-                conclusion = (_b = latest.conclusion) !== null && _b !== void 0 ? _b : null;
+                core.info(`status loop: ${status}`);
+                core.info(`conclusion loop: ${conclusion}`);
+                status = latest.status;
+                conclusion = latest.conclusion;
             }
             if (status !== null && conclusion !== null) {
                 core.info(`status: ${status}`);
