@@ -27,10 +27,10 @@
     "@actions/github": "^5.0.0"
   },
   "devDependencies": {
-    "typescript": "^4",
+    "@types/node": "^17.0.45",
+    "@vercel/ncc": "^0",
     "prettier": "^2",
-    "@types/node": "^17",
-    "@zeit/ncc": "^0",
-    "release-it": "*"
+    "release-it": "*",
+    "typescript": "^4"
   }
 }
