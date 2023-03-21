@@ -41,7 +41,7 @@ var github = require("@actions/github");
 var utils_1 = require("./utils");
 function run() {
     return __awaiter(this, void 0, Promise, function () {
-        var token, workflow, branch, event, wait, fullRepo, _a, owner, repo, octokit, status, conclusion, result, _i, _b, latest, ex_1;
+        var token, workflow, branch, event, wait, fullRepo, _a, owner, repo, octokit, status, conclusion, result, first, _i, _b, latest, ex_1;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -72,12 +72,17 @@ function run() {
                 case 1:
                     result = _c.sent();
                     core.info("Received status code " + result.status + ", number or results: " + result.data.total_count);
+                    first = result.data.workflow_runs.slice(0, 1);
+                    first.forEach(function (element) {
+                        core.info("status loop1: " + element.status);
+                        core.info("conclusion loop1: " + element.conclusion);
+                    });
                     for (_i = 0, _b = result.data.workflow_runs; _i < _b.length; _i++) {
                         latest = _b[_i];
-                        core.info("status loop: " + status);
-                        core.info("conclusion loop: " + conclusion);
                         status = latest.status;
                         conclusion = latest.conclusion;
+                        core.info("status loop: " + status);
+                        core.info("conclusion loop: " + conclusion);
                     }
                     if (status !== null && conclusion !== null) {
                         core.info("status: " + status);
