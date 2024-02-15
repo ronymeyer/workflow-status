@@ -29,7 +29,7 @@
   "devDependencies": {
     "@types/node": "^17.0.45",
     "@vercel/ncc": "^0",
-    "prettier": "^2",
+    "prettier": "^3",
     "release-it": "*",
     "typescript": "^5"
   }
