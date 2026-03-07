@@ -27,7 +27,7 @@
     "@actions/github": "^9.0.0"
   },
   "devDependencies": {
-    "@types/node": "^25.3.3",
+    "@types/node": "^25.3.5",
     "@vercel/ncc": "^0",
     "prettier": "^3",
     "release-it": "*",
