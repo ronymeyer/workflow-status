@@ -24,7 +24,7 @@
   "homepage": "https://github.com/ronymeyer/workflow-status/#readme",
   "dependencies": {
     "@actions/core": "^3.0.1",
-    "@actions/github": "^9.1.0"
+    "@actions/github": "^9.1.1"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
