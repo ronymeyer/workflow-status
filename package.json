@@ -31,6 +31,6 @@
     "@vercel/ncc": "^0",
     "prettier": "^3",
     "release-it": "*",
-    "typescript": "^6"
+    "typescript": "^7"
   }
 }
